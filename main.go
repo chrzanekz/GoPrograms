@@ -30,9 +30,11 @@ func main() {
 	//some info for user
 	greetUsers()
 
-	firstName, lastName, email, userTickets := getUserInput()
+	
 	
 	for {
+
+		firstName, lastName, email, userTickets := getUserInput()
 		
 		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
 
