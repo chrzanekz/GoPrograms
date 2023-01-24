@@ -12,12 +12,21 @@ func main() {
 	var remainingTickets uint = 50
 	bookings := []string{}
 
-	//some info for user
-	fmt.Printf("confrenceName is %T, conferenceTickets is %T, remainingTickets is %T\n", conferenceName, conferenceTickets, remainingTickets)
-	fmt.Printf("Welcome in out %v booking application!\n", conferenceName)
-	fmt.Printf("Today, we have %v tickets and %v tickets is still available.\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets here to attend")
+	// switch test
+	city := "Bytow"
 
+	switch city {
+		case "Bytow":
+			fmt.Printf("Welcome to Bytow conference\n")
+		case "Gdansk", "Gdynia":
+			fmt.Printf("Welcome to Tricity conference\n")
+		default:
+			fmt.Printf("you didnt choose right city")
+	}
+
+	//some info for user
+	greetUsers(conferenceName, conferenceTickets, remainingTickets)
+	
 	for remainingTickets > 0 && len(bookings) < 50 {
 		//declare user variables
 		var firstName string
@@ -38,6 +47,7 @@ func main() {
 		fmt.Println("Enter how many tickets do you want to buy:")
 		fmt.Scan(&userTickets)
 
+		//bool variables checking
 		isValidName := len(firstName) >= 2 && len(lastName) >= 2
 		isValidEmail := strings.Contains(email, "@")
 		isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
@@ -53,18 +63,11 @@ func main() {
 			fmt.Printf("the length of slice is: %v \n", len(bookings))
 
 			//results on the screen
-			fmt.Printf("Thank You %v %v for buying %v tickets, you'll receive an email at %v with confirmation.\n", firstName, lastName, email, userTickets)
+			fmt.Printf("Thank You %v %v for buying %v tickets, you'll receive an email at %v with confirmation.\n", firstName, lastName, userTickets, email)
 			fmt.Printf("%v tickets remaining for %v", remainingTickets, conferenceName)
 			
-			//loop for creating first name slice
-			firstNames := []string{}
-			for _, booking := range bookings {
-				var names = strings.Fields(booking)
-				firstNames = append(firstNames, names[0])
-			}
-
-			//print results
-			fmt.Printf("The first names clients of our bookings are: %v\n", firstNames)
+			//printing first names of customers
+			printFirstNames(bookings)
 
 			
 			if remainingTickets == 0 {
@@ -72,9 +75,38 @@ func main() {
 				fmt.Println("Our conference is booked out. Please come back next year.")
 				break
 			}
+			// else checking for variables input
 		} else {
-			
-			fmt.Printf("Your input data is invalid, please try again"\n)
+			if !isValidName {
+				fmt.Printf("First name or last name is incorrect (too short).\n")
+			}
+			if !isValidEmail {
+				fmt.Printf("Check your e-mail address\n")
+			}
+			if !isValidTicketNumber {
+				fmt.Printf("Check your ticket number, it's incorrect or we don't have this much tickets available.\n")
+			}
+			fmt.Printf("Your input data is invalid, please try again\n")
 		}
 	}
+}
+
+//additional function to test
+func greetUsers(confName string, conferenceTickets int, remainingTickets uint){
+	fmt.Printf("confrenceName is %T, conferenceTickets is %T, remainingTickets is %T\n", confName, conferenceTickets, remainingTickets)
+	fmt.Printf("Welcome in out %v booking application!\n", confName)
+	fmt.Printf("Today, we have %v tickets and %v tickets is still available.\n", conferenceTickets, remainingTickets)
+	fmt.Println("Get your tickets here to attend")
+}
+
+func printFirstNames(bookings []string) {
+	//loop for creating first name slice
+	firstNames := []string{}
+	for _, booking := range bookings {
+		var names = strings.Fields(booking)
+		firstNames = append(firstNames, names[0])
+	}
+
+	//print results
+	fmt.Printf("The first names clients of our bookings are: %v\n", firstNames)
 }
