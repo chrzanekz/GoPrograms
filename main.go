@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"strings"
+	"booking-app/helper" //own package
+	"strconv"
 )
 
 //constant values, first variables
@@ -10,6 +12,7 @@ var conferenceName = "Go Conference"
 const conferenceTickets int = 50
 var remainingTickets uint = 50
 var bookings = []string{}
+
 
 
 func main() {
@@ -36,7 +39,7 @@ func main() {
 
 		firstName, lastName, email, userTickets := getUserInput()
 		
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
+		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
 		//basic calculations
 		if isValidName && isValidEmail && isValidTicketNumber {
@@ -120,6 +123,14 @@ func getUserInput() (string, string, string, uint){
 
 func bookTicket(userTickets uint, firstName string, lastName string, email string){
 	remainingTickets = remainingTickets - userTickets
+
+	// create a map for a user
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
+
 	bookings = append(bookings, firstName + " " + lastName)
 	//results on the screen
 	fmt.Printf("Thank You %v %v for buying %v tickets, you'll receive an email at %v with confirmation.\n", firstName, lastName, userTickets, email)
