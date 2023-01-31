@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"booking-app/helper" //own package
+	"time"
 )
 
 //constant values, first variables
@@ -32,7 +33,7 @@ func main() {
 		case "Gdansk", "Gdynia":
 			fmt.Printf("Welcome to Tricity conference\n")
 		default:
-			fmt.Printf("you didnt choose right city")
+			fmt.Printf("you didnt choose right city\n")
 	}
 
 	//some info for user
@@ -50,6 +51,7 @@ func main() {
 		if isValidName && isValidEmail && isValidTicketNumber {
 			
 			bookTicket(userTickets, firstName, lastName, email)
+			sendTicket(userTickets, firstName, lastName, email)
 
 
 			fmt.Printf("the whole slice is: %v \n", bookings)
@@ -66,7 +68,7 @@ func main() {
 			
 			if remainingTickets == 0 {
 				//ending loop
-				fmt.Println("Our conference is booked out. Please come back next year.")
+				fmt.Println("Our conference is booked out. Please come back next year.\n")
 				break
 			}
 			// else checking for variables input
@@ -141,5 +143,13 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 
 	//results on the screen
 	fmt.Printf("Thank You %v %v for buying %v tickets, you'll receive an email at %v with confirmation.\n", firstName, lastName, userTickets, email)
-	fmt.Printf("%v tickets remaining for %v", remainingTickets, conferenceName)
+	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+}
+
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	time.Sleep(10 * time.Second)
+	var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
+	fmt.Println("\n##########################")
+	fmt.Printf("Sending ticket:\n%v \nto email adress %v\n", ticket, email)
+	fmt.Println("##########################\n")
 }
