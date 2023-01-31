@@ -51,7 +51,7 @@ func main() {
 		if isValidName && isValidEmail && isValidTicketNumber {
 			
 			bookTicket(userTickets, firstName, lastName, email)
-			sendTicket(userTickets, firstName, lastName, email)
+			go sendTicket(userTickets, firstName, lastName, email)
 
 
 			fmt.Printf("the whole slice is: %v \n", bookings)
