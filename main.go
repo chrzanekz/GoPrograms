@@ -10,7 +10,9 @@ import (
 var conferenceName = "Go Conference"
 const conferenceTickets int = 50
 var remainingTickets uint = 50
-var bookings = make([]map[string]string, 10)
+var bookings = make([]map[string]string, 0)
+
+
 
 
 
@@ -130,6 +132,8 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
 
 	bookings = append(bookings, userData)
+	fmt.Printf("List of bookings is %v\n", bookings)
+
 	//results on the screen
 	fmt.Printf("Thank You %v %v for buying %v tickets, you'll receive an email at %v with confirmation.\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v", remainingTickets, conferenceName)
